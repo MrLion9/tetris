@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+    <title>Tetris</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
+	<meta name="apple-touch-fullscreen" content="yes" />
+    <!-- link to the last version of babylon -->
+    <script src="dist/babylon.2.4.js"></script>
+    <script src="dist/cannon.js"></script>
+    <script src="dist/Oimo.js"></script>
+    
+    <style>
+        html, body {
+            overflow: hidden;
+            width   : 100%;
+            height  : 100%;
+            margin  : 0;
+            padding : 0;
+        }
+
+        #renderCanvas {
+            width   : 100%;
+            height  : 100%;
+            touch-action: none;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="renderCanvas"></canvas>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+        var canvas = document.getElementById('renderCanvas');
+        var engine = new BABYLON.Engine(canvas, true);
+
+
+        var scene = (function() {
+            // This creates a basic Babylon Scene object (non-mesh)
+            var scene = new BABYLON.Scene(engine);
+            scene.enablePhysics(new BABYLON.Vector3(0, 0, 0));//, new BABYLON.OimoJSPlugin());
+            //scene.useDelayedTextureLoading = true;
+
+            // Default intensity is 1. Let's dim the light a small amount
+            //light.intensity = 0.7;
+
+            return scene;
+        })();
+
+
+       
+        var camera = new BABYLON.ArcRotateCamera(
+            "Camera", 
+            3 * Math.PI / 2, 
+            Math.PI / 2, 40, 
+            BABYLON.Vector3.Zero(), 
+            scene
+        );
+
+        camera.attachControl(canvas, true);
+
+
+        // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+        var light = new BABYLON.HemisphericLight(
+            "light1", 
+            new BABYLON.Vector3(0, 1, -1), 
+            scene
+        );
+
+        engine.runRenderLoop(function() {
+            scene.render();
+        });
+
+
+        //scene.registerBeforeRender(animate);
+
+        document.onkeypress = function (e) {
+            var key = String.fromCharCode(e.keyCode);
+            console.log("key " + key);
+
+            switch (key) {
+                case 'w':
+
+                    break;
+                case 's':
+
+                    break;
+                case 'r':
+
+                    break;
+                case 'e':
+
+                    break;
+                case 't':
+
+                    break;
+                case 'f':
+
+                    break;
+                case 'c':
+
+                    break;
+            }
+        };
+        
+        window.addEventListener("resize", function () {
+        	console.log("resize");    
+        	engine.resize();    
+        	//If you need the values width and height of the scene    
+        	//widthGame = engine.getRenderWidth();     
+        	//heightGame = engine.getRenderHeight();
+        });
+
+    });
+</script>
+</body>
+</html>
