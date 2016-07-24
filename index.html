@@ -9,7 +9,10 @@
     <script src="dist/babylon.2.4.js"></script>
     <script src="dist/cannon.js"></script>
     <script src="dist/Oimo.js"></script>
-    
+
+    <script src="scripts/debugmode.js"></script>
+    <script src="scripts/detail.js"></script>
+
     <style>
         html, body {
             overflow: hidden;
@@ -49,30 +52,62 @@ document.addEventListener("DOMContentLoaded", function(){
             return scene;
         })();
 
-
        
         var camera = new BABYLON.ArcRotateCamera(
             "Camera", 
-            3 * Math.PI / 2, 
-            Math.PI / 2, 40, 
+            Math.PI/2, 
+            Math.PI/2, 
+            120, 
             BABYLON.Vector3.Zero(), 
             scene
         );
 
         camera.attachControl(canvas, true);
 
+        scene.gravity = new BABYLON.Vector3(0, -0.1, 0);
+        // Enable Collisions
+        scene.collisionsEnabled = true;
+
+        //Then apply collisions and gravity to the active camera
+        camera.checkCollisions = true;
+        camera.applyGravity = true;
+
 
         // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
         var light = new BABYLON.HemisphericLight(
             "light1", 
-            new BABYLON.Vector3(0, 1, -1), 
+            new BABYLON.Vector3(0, 1, 1), 
             scene
         );
+
+        var debug = new Debug(scene);
+        debug.globalAxies();
 
         engine.runRenderLoop(function() {
             scene.render();
         });
 
+        var builder = new detailBuilder(5, scene);
+        var figure = builder.create([4, 4, 0, 1], "");
+        // var cube = BABYLON.MeshBuilder.CreateBox("box", {size: 5}, scene);
+        // cube.setPhysicsState({
+        //     impostor: BABYLON.PhysicsEngine.MeshImpostor,
+        //     mass: 1
+        // });
+
+        var underworld = BABYLON.MeshBuilder.CreatePlane("underworld", {width: 50, height: 5}, scene);
+        underworld.position.y = -20;
+        underworld.rotation.x = Math.PI/2;
+        underworld.setPhysicsState({
+            impostor: BABYLON.PhysicsEngine.MeshImpostor,
+            mass: 0
+        });
+        underworld.checkCollisions = true;
+        //underworld.isVisible = false;
+
+        scene.registerBeforeRender(function () {
+            figure[0].moveWithCollisions(scene.gravity);
+        });
 
         //scene.registerBeforeRender(animate);
 
