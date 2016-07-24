@@ -88,7 +88,35 @@ document.addEventListener("DOMContentLoaded", function(){
         });
 
         var builder = new detailBuilder(5, scene);
-        var figure = builder.create([4, 4, 0, 1], "");
+        var figure1 = builder.create(
+            [4, 4, 0, 1], 
+            [66, 133, 244], 
+            new BABYLON.Vector3(0,0,0)
+        );
+
+        var figure2 = builder.create(
+            [1, 1, 1], 
+            [281, 188, 5], 
+            new BABYLON.Vector3(25,0,0)
+        );
+
+        var figure3 = builder.create(
+            [4, 1, 4], 
+            [234, 67, 53], 
+            new BABYLON.Vector3(10,20,0)
+        );
+
+        var figure4 = builder.create(
+            [1, 4, 2], 
+            [52, 168, 83], 
+            new BABYLON.Vector3(-10,20,0)
+        );
+
+        var figure5 = builder.create(
+            [4, 1, 1], 
+            [102, 0, 153], 
+            new BABYLON.Vector3(15,0,0)
+        );
         // var cube = BABYLON.MeshBuilder.CreateBox("box", {size: 5}, scene);
         // cube.setPhysicsState({
         //     impostor: BABYLON.PhysicsEngine.MeshImpostor,
@@ -106,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function(){
         //underworld.isVisible = false;
 
         scene.registerBeforeRender(function () {
-            figure[0].moveWithCollisions(scene.gravity);
+            //figure1[0].moveWithCollisions(scene.gravity);
         });
 
         //scene.registerBeforeRender(animate);

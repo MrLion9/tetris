@@ -4,14 +4,19 @@ function detailBuilder (size, scene){
 	this.size = size;
 }
 
-detailBuilder.prototype.create = function(path, color){
+detailBuilder.prototype.create = function(path, color, position){
 	var figure = [];
+
+	var material = new BABYLON.StandardMaterial("color", this.scene);
+    material.diffuseColor = new BABYLON.Color3.FromInts(color[0], color[1], color[2]);
 
 	var start = BABYLON.MeshBuilder.CreateBox("box", {size: this.size}, this.scene);
 	start.setPhysicsState({
         impostor: BABYLON.PhysicsEngine.MeshImpostor,
         mass: 1
     });
+    start.material = material;
+    start.position = position;
 	figure.push(start);
 
 	var parent = start;
@@ -26,7 +31,7 @@ detailBuilder.prototype.create = function(path, color){
 		            impostor: BABYLON.PhysicsEngine.MeshImpostor,
 		            mass: 1
 		        });
-
+				cube.material = material;
 				cube.parent = parent;
 				parent = cube;
 				cube.position.y = this.size;
@@ -38,7 +43,7 @@ detailBuilder.prototype.create = function(path, color){
 		            impostor: BABYLON.PhysicsEngine.MeshImpostor,
 		            mass: 1
 		        });
-
+				cube.material = material;
 				cube.parent = parent;
 				parent = cube;
 				cube.position.y = -this.size;
@@ -50,7 +55,7 @@ detailBuilder.prototype.create = function(path, color){
 		            impostor: BABYLON.PhysicsEngine.MeshImpostor,
 		            mass: 1
 		        });
-
+				cube.material = material;
 				cube.parent = parent;
 				parent = cube;
 				cube.position.x = this.size;
@@ -62,7 +67,7 @@ detailBuilder.prototype.create = function(path, color){
 		            impostor: BABYLON.PhysicsEngine.MeshImpostor,
 		            mass: 1
 		        });
-
+				cube.material = material;
 				cube.parent = parent;
 				parent = cube;
 				cube.position.x = -this.size;
